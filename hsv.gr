@@ -2,12 +2,12 @@ import List from "list"
 import Map from "map"
 import Number from "number"
 
-type Point3 = (Number, Number, Number)
+type Point3<scalar> = (scalar, scalar, scalar)
 
-enum Color {
-  Hsv(Point3),
+enum Color<scalar> {
+  Hsv(Point3<scalar>),
+  Rgb(Point3<scalar>),
   NamedColor(String),
-  Rgb(Point3),
 }
 
 let namedColors = Map.fromArray(
