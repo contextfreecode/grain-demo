@@ -1,0 +1,58 @@
+import List from "list"
+import Map from "map"
+import Number from "number"
+
+type Point3 = (Number, Number, Number)
+
+enum Color {
+  Rgb(Point3),
+  Hsv(Point3),
+  NamedColor(String),
+}
+
+let namedColors = Map.fromArray(
+  [>
+    ("red", Rgb((1, 0, 0))),
+    ("yellow", Rgb((1, 1, 0))),
+    ("blue", Rgb((0, 0, 1))),
+  ]
+)
+
+export let hsvToRgb = hsv => {
+  // let { h, s, v } = hsv
+  let (h, s, v) = hsv
+  let c = s * v
+  let h1 = h * 6
+  let x = c * (1 - Number.abs(h1 % 2 - 1))
+  let (r, g, b) = match (void) {
+    _ when h1 < 1 => (c, x, 0),
+    _ when h1 < 2 => (x, c, 0),
+    _ when h1 < 3 => (0, c, x),
+    _ when h1 < 4 => (0, x, c),
+    _ when h1 < 5 => (x, 0, c),
+    _ => (c, 0, x),
+  }
+  let m = v - c
+  (r + m, g + m, b + m)
+}
+
+export let colorToRgb = color =>
+  match (color) {
+    Rgb(_) => Some(color),
+    Hsv(hsv) => Some(Rgb(hsvToRgb(hsv))),
+    NamedColor(name) => Map.get(name, namedColors),
+  }
+
+let test = () => {
+  let colors = [
+    Rgb((1, 0.1, 0.1)),
+    NamedColor("yellow"),
+    Hsv((2 / 3,  5 / 6, 1)),
+  ]
+  List.forEachi((color, index) => {
+    let rgb = colorToRgb(color)
+    print("Color " ++ toString(index) ++ ": " ++ toString(rgb))
+  }, colors)
+}
+
+test()
