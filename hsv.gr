@@ -47,7 +47,8 @@ let test = () => {
   let colors = [
     Rgb((1, 0.1, 0.1)),
     NamedColor("yellow"),
-    Hsv((2 / 3,  5 / 6, 1)),
+    Hsv((2 / 3,   5 / 6, 1)),
+    NamedColor("whatever"),
   ]
   List.forEachi((color, index) => {
     let rgb = colorToRgb(color)
