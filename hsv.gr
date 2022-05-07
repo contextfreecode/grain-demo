@@ -5,9 +5,9 @@ import Number from "number"
 type Point3 = (Number, Number, Number)
 
 enum Color {
-  Rgb(Point3),
   Hsv(Point3),
   NamedColor(String),
+  Rgb(Point3),
 }
 
 let namedColors = Map.fromArray(
